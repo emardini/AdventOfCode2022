@@ -53,23 +53,11 @@
             return input;
         }
 
-        private static int CalculatePoints(char l)
-        {
-            return char.IsLower(l) ? (l - 'a') + 1 : l - 'A' + 27;
-        }
+        private static int CalculatePoints(char l) => char.IsLower(l) ? (l - 'a') + 1 : l - 'A' + 27;
 
-        private static char GetCommonItem(string item1, string item2)
-        {
-            var comparer = item1.ToHashSet();
-            return item2.First(i => comparer.Contains(i));
-        }
+        private static char GetCommonItem(string item1, string item2) => item1.Intersect(item2).First();
 
-        private static char GetCommonItem(List<string> input)
-        {
-            var comparer1 = input[0].ToHashSet();
-            var comparer2 = input[1].Where(i => comparer1.Contains(i)).ToHashSet();
-            return input[2].First(i => comparer2.Contains(i));
-        }
+        private static char GetCommonItem(List<string> input) => input.Skip(1).Aggregate(input.First().ToList(), (l, l2) => l.Intersect(l2.ToList()).ToList()).First();
     }
 
 }
