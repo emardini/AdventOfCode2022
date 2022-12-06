@@ -2,32 +2,22 @@
 {
     public static class Day2
     {
-        private static Dictionary<char, int>  playValues = new Dictionary<char, int>{{'X', 1}, {'Y', 2}, {'Z', 3}};
+        private static Dictionary<char, int>  playValues = new() { {'X', 1}, {'Y', 2}, {'Z', 3}};
         public static void GetAnswerA()
         {
 
-            var result = new List<(char A, char B)>();
             try
             {
-                using StreamReader reader = new("day2-input.txt");
-    
-                do
-                {
-                    var line = (reader.ReadLine() ?? "").Trim();
-                    var splitLine = line.Split(' ');
-                    result.Add((splitLine[0][0], splitLine[1][0]));
-                    
-                }
-                while (reader.Peek() != -1);               
+                var lines = File.ReadAllLines("day2-input.txt");
+                var  result = lines.Select(l => l.Trim().Split(' '))
+                            .Select(l => (l[0][0], l[1][0]));
+                Console.WriteLine(result.Select(r => GetScore(r.Item1, r.Item2)).Sum());
+                Console.WriteLine(result.Select(r => GetScoreForOutcome(r.Item1, r.Item2)).Sum());
             }
             catch
             {
                 //Ignore error
-            }
-
-           
-            Console.WriteLine(result.Select(r => GetScore(r.A, r.B)).Sum());
-            Console.WriteLine(result.Select(r => GetScoreForOutcome(r.A, r.B)).Sum());
+            }                    
         }
         private static int GetScore(char otherPlay, char myPlay)
         {
