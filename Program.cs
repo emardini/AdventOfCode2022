@@ -11,7 +11,7 @@ namespace AdventOfCode2022
 
         public static void Main()
         {
-            Day7.Problem.GetAnswerB();
+            Day8.Problem.GetAnswerB();
         }
     }
 }
